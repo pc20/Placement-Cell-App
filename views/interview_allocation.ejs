@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+    <title>Schedule Interview</title>
+</head>
+
+<body>
+    <%- include('_header') %>
+        <div class="container">
+            <form class="d-flex flex-column w-50 mx-auto mt-4 p-2 border border-dark rounded-lg"
+                action="/interview/schedule-interview" method="post">
+                <h3 class="mb-lg-5 text-center">Schedule Interview</h3>
+
+                <div class="mb-3 px-3">
+                    <label for="name" class="form-label">Name</label>
+                    <select class="form-select" aria-label="Default select example" name="id" id="name">
+                        <option selected disabled>Select Student</option>
+
+                        <%for(let student of students){%>
+                            <option value="<%=student.id%>">
+                                <%= student.name %>
+                            </option>
+                            <%}%>
+                    </select>
+                </div>
+
+                <div class="mb-3 px-3">
+                    <label for="company" class="form-label">Company</label>
+                    <input type="text" class="form-control" id="company" name="company" />
+                </div>
+
+                <div class="mb-3 px-3">
+                    <label for="date" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="date" name="date" />
+                </div>
+
+                <button class="btn btn-primary w-50 m-auto">
+                    Schedule Interview
+                </button>
+            </form>
+        </div>
+
+        <%- include('_bootStrap_script')%>
+</body>
+
+</html>

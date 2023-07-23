@@ -1,0 +1,18 @@
+<header>
+    <% if (locals.user) { %>
+        <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">Placement Cell</a>
+                <span class="navbar-brand">
+                    Welcome <%=locals.user.name%>
+                </span>
+                <form class="d-flex px-4">
+                    <a class="navbar-brand nav-link p-2" href="/">Home</a>
+                    <a class="navbar-brand nav-link p-2" href="/interview/home">Interview List</a>
+                    <a class="navbar-brand nav-link p-2" href="/users/download-csv">Download Report</a>
+                    <a href="/users/sign-out" type="button" class="btn btn-danger align-self-center">Log Out</a>
+                </form>
+            </div>
+        </nav>
+        <% } %>
+</header>

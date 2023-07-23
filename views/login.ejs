@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Animated Login Form</title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+	<div class="container">
+		<div class="login-content">
+			<form style="border: 2px solid black; border-radius: 5%;" action="/users/create-session" method="POST">
+				<div>
+					<% if(error){ %>
+						<h5 style="color: red;">
+							UserName or Password is wrong.
+						</h5>
+
+						<%} %>
+							<% if(flash.success && flash.success.length> 0) {%>
+
+								<h5 style="color: green;">
+									<%= flash.success %>
+								</h5>
+
+								<% } %>
+				</div>
+				<img style="margin-top: 5%;" width="30%"
+					src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/82b8d8efd3b0ac6382b9d0d71a99c6cf9dcefa23/img/avatar.svg">
+				<h2 style="color: black;">Welcome User</h2>
+
+				<div style="display: flex; flex-direction: column; margin: 2%;">
+					<div class="input-div border-bottom">
+						<div><i class="fas fa-user"></i>
+							<label>E Mail</label>
+						</div>
+						<input type="email" name="email" required>
+					</div>
+					<div class="input-div border-bottom">
+						<div><i class="fas fa-lock"></i>
+							<label>Password</label>
+						</div>
+						<input type="password" name="password" required>
+					</div>
+				</div>
+				<div>
+					<button class="btn" style="display: inline; margin: auto; width: 80%;" type="submit">
+						Login
+					</button>
+				</div>
+				<div style="margin-top: 5%;">
+					<p class="msg-s">New user? <a href="/users/sign-up">Register</a></p>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

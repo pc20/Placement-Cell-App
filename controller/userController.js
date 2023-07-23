@@ -61,6 +61,7 @@ module.exports.signIn = function (req, res) {
     return res.render('login', {
         error: req.query.error,
     });
+
 };
 
 module.exports.signUp = function (req, res) {
@@ -69,7 +70,6 @@ module.exports.signUp = function (req, res) {
 
 // sign in and create a session for the user
 module.exports.createSession = function (req, res) {
-    req.flash("success", req.authInfo.message);
     return res.redirect('/');
 }
 

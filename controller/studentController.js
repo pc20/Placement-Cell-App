@@ -11,7 +11,7 @@ module.exports.addStudent = function (req, res) {
     Student.findOne({ email: req.body.email }).then((student) => {
         if (student) {
             console.log('Email already exists');
-            req.flash("success", "Email already exists");
+            req.flash("error", "Email already exists");
             return res.redirect('back');
         } else {
             Student.create({
@@ -25,6 +25,7 @@ module.exports.addStudent = function (req, res) {
                 webd: req.body.webd,
                 react: req.body.react,
             }).then((student) => {
+                req.flash("success", "Student Added Successfully.");
                 return res.redirect('/');
             }).catch((err) => {
                 console.log("Error in creating student:", err);
@@ -53,7 +54,7 @@ module.exports.deleteStudent = async function (req, res) {
             }
         }
         await Student.findByIdAndDelete(id);
-        console.log
+        req.flash("success", "Student deleted.");
         return res.redirect('/');
     }).catch((err) => {
         console.log(err);

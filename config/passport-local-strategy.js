@@ -47,15 +47,11 @@ passport.checkAuthentication = function (req, res, next) {
     //if the user is sign in  then pass the request to next function that is (controllers -action);
     if (req.isAuthenticated()) {
         console.log('user authenticated');
-        if (!(res.locals.flash.success.length === 0)) {
-            req.flash("success", res.locals.flash.success);
-        }
         return next();
     } else {
         console.log('user authentication failed');
     }
     //if the user is not sign in then pass the request to
-
     return res.redirect("/users/sign-in");
 };
 

@@ -37,6 +37,7 @@ module.exports.scheduleInterview = async function (req, res) {
             for (let student of existInterview.students) {
                 // if student id already exists
                 if (student._id === req.body.id) {
+                    req.flash("error", "Interview with this student already scheduled");
                     console.log('Interview with this student already scheduled');
                     return res.redirect('back');
                 }
@@ -57,6 +58,7 @@ module.exports.scheduleInterview = async function (req, res) {
             console.log(err);
             return res.redirect('back');
         });
+        req.flash("success", "Interview got scheduled");
         return res.redirect('/interview/home');
     });
 };
@@ -98,6 +100,6 @@ module.exports.updateStatus = async function (req, res) {
         console.log(err);
         return res.redirect('back');
     });
-
+    req.flash("success", "Status got Updated.");
     return res.redirect('back');
 };

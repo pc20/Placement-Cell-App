@@ -17,6 +17,21 @@
     <%- include('_header') %>
         <div class="w-75 mx-auto mt-5">
             <div class="row">
+                <% if(error){ %>
+                    <h5 style="color: red;">
+                        UserName or Password is wrong.
+                    </h5>
+
+                    <%} %>
+                        <% if(flash.success && flash.success.length> 0) {%>
+
+                            <h5 style="color: green;">
+                                <%= flash.success %>
+                            </h5>
+
+                            <% } %>
+            </div>
+            <div class="row">
                 <div class="col-6">
                     <h1>Interviews</h1>
                 </div>

@@ -10,10 +10,12 @@ module.exports.addStudentPage = async function (req, res) {
 module.exports.addStudent = function (req, res) {
     Student.findOne({ email: req.body.email }).then((student) => {
         if (student) {
+            // if student already exist
             console.log('Email already exists');
             req.flash("error", "Email already exists");
             return res.redirect('back');
         } else {
+            // else create a student
             Student.create({
                 name: req.body.name,
                 email: req.body.email,
@@ -25,6 +27,7 @@ module.exports.addStudent = function (req, res) {
                 webd: req.body.webd,
                 react: req.body.react,
             }).then((student) => {
+                // flash message and redirect back to home page
                 req.flash("success", "Student Added Successfully.");
                 return res.redirect('/');
             }).catch((err) => {
@@ -35,11 +38,14 @@ module.exports.addStudent = function (req, res) {
     });
 };
 
+// controller for deleting the students
 module.exports.deleteStudent = async function (req, res) {
     const { id } = req.params;
+    // first delete all the allocated interview for given student.
     Student.findById(id).then(async (student) => {
         if (student && student.interviews.length > 0) {
             for (let inter of student.interviews) {
+                // find inteview iterate over students list and delete the given student from that list
                 Interview.findOne({ companyName: inter.company }).then((interview) => {
                     if (interview) {
                         for (let i = 0; i < interview.students.length; i++) {
@@ -53,6 +59,7 @@ module.exports.deleteStudent = async function (req, res) {
                 })
             }
         }
+        // once all allocated interview got deleted, delete the student also
         await Student.findByIdAndDelete(id);
         req.flash("success", "Student deleted.");
         return res.redirect('/');

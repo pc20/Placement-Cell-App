@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// student schema
 const studentSchema = new mongoose.Schema(
     {
         name: {
@@ -40,6 +41,7 @@ const studentSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
+        // array for all interviews
         interviews: [
             {
                 company: {

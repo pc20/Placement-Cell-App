@@ -16,6 +16,7 @@ body {
 	padding: 0 2rem;
 }
 
+/* for user pages only */
 .login-content {
 	display: flex;
 	justify-content: flex-start;

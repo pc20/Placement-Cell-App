@@ -3,7 +3,7 @@ const Student = require('../models/students');
 const fs = require('fs');
 const fastcsv = require('fast-csv');
 
-
+// check if user exist then render the page
 module.exports.profile = async function (req, res) {
     try {
         let user = await User.findById(req.user.id);
@@ -22,6 +22,7 @@ module.exports.profile = async function (req, res) {
     }
 }
 
+// add user if not exist
 module.exports.register = async function (req, res) {
     console.log('registering new user');
     console.log(req.body);
@@ -44,11 +45,13 @@ module.exports.register = async function (req, res) {
             return res.redirect("/users/sign-up");
         }
     } else {
+        // user already exist
         req.flash('error', 'User already registered.')
         return res.redirect("/users/sign-up");
     }
 }
 
+// redirect to logIn page on signOut
 module.exports.signOut = function (req, res) {
     req.logout(function (err) {
         if (err) { return next(err); }
@@ -57,6 +60,7 @@ module.exports.signOut = function (req, res) {
     });
 };
 
+// render logIn page
 module.exports.signIn = function (req, res) {
     return res.render('login', {
         error: req.query.error,
@@ -64,6 +68,7 @@ module.exports.signIn = function (req, res) {
 
 };
 
+//  render signUp page
 module.exports.signUp = function (req, res) {
     return res.render('signUp')
 }
@@ -76,12 +81,15 @@ module.exports.createSession = function (req, res) {
 //download CSV
 module.exports.downloadCsv = async function (req, res) {
     try {
+        //  find students
         const students = await Student.find({});
 
         let data = '';
         let no = 1;
+        // columns heading
         let csv = 'S.No, Name, Email, College, Placemnt, Contact Number, Batch, DSA Score, WebDev Score, React Score, Interview, Date, Result';
 
+        // prepare data
         for (let student of students) {
             data =
                 no +
@@ -113,11 +121,13 @@ module.exports.downloadCsv = async function (req, res) {
             csv += '\n' + data;
         }
 
+        // add file to csv folder
         const dataFile = fs.writeFile('csv/data.csv', csv, function (error, data) {
             if (error) {
                 console.log(error);
                 return res.redirect('back');
             }
+            //  make the file downloadble.
             console.log('Report generated successfully');
             return res.download('csv/data.csv');
         });

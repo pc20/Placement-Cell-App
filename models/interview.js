@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 
+// interview schemma
 const interviewSchema = new mongoose.Schema(
     {
         companyName: {
             type: String,
             unique: true,
         },
+        // reference of student schema
         students: [
             {
                 student: {

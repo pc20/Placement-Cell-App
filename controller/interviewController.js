@@ -1,6 +1,7 @@
 const Student = require('../models/students');
 const Interview = require('../models/interview');
 
+// display home page for employee
 module.exports.home = async function (req, res) {
     Student.find({}).then((students) => {
         return res.render('interview_home', { students });
@@ -9,6 +10,7 @@ module.exports.home = async function (req, res) {
     })
 };
 
+// controller for render allocate interview page
 module.exports.allocateInterview = function (req, res) {
     Student.find({}).then((students) => {
         return res.render('interview_allocation', { students });
@@ -18,7 +20,9 @@ module.exports.allocateInterview = function (req, res) {
     })
 };
 
+// controller for scheduling the interview
 module.exports.scheduleInterview = async function (req, res) {
+    // check if interview with given company exist
     Interview.findOne({ companyName: req.body.company }).then((existInterview) => {
         const studentObj = {
             id: req.body.id,
@@ -26,6 +30,7 @@ module.exports.scheduleInterview = async function (req, res) {
             result: 'Pending'
         };
         if (!existInterview) {
+            // if not exist then create interview with company and student name
             Interview.create({ companyName: req.body.company, students: [] }).then((interview) => {
                 interview.students.push(studentObj);
                 interview.save();
@@ -34,6 +39,7 @@ module.exports.scheduleInterview = async function (req, res) {
                 return res.redirect('back');
             })
         } else {
+            // if interview exist check for student
             for (let student of existInterview.students) {
                 // if student id already exists
                 if (student._id === req.body.id) {
@@ -46,6 +52,7 @@ module.exports.scheduleInterview = async function (req, res) {
             existInterview.save();
         }
 
+        // find student and add allocated interview to their list
         Student.findById(req.body.id).then((student) => {
             const interview = {
                 company: req.body.company,
@@ -58,6 +65,7 @@ module.exports.scheduleInterview = async function (req, res) {
             console.log(err);
             return res.redirect('back');
         });
+        // flash message
         req.flash("success", "Interview got scheduled");
         return res.redirect('/interview/home');
     });
